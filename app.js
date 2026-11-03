@@ -129,6 +129,7 @@ function openQuiz(quizId, index) {
 
   app.querySelector('[data-home]').addEventListener('click', renderHome);
   app.querySelector('.player-transfer').addEventListener('click', openTransfer);
+  app.querySelectorAll('.question-image').forEach((image) => image.addEventListener('click', () => window.open(image.src, '_blank', 'noopener,noreferrer')));
   app.querySelectorAll('[data-option]').forEach((button) => button.addEventListener('click', () => {
     const id = button.dataset.option;
     let next = [...(progress.answers[currentIndex] || [])];
