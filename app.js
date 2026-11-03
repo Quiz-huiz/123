@@ -70,16 +70,7 @@ function isCorrect(question, selected) {
 
 function renderHome() {
   app.innerHTML = `
-    <section class="hero">
-      <div>
-        <div class="eyebrow">Învață în ritmul tău</div>
-        <h1>Înțelegi mai bine<br />cu <em>fiecare întrebare.</em></h1>
-        <p class="hero-copy">Un loc liniștit pentru recapitulare. Alege un set, verifică ce știi și continuă oricând ai un moment liber.</p>
-      </div>
-      <div class="hero-aside"><strong>Fără grabă.</strong><span>Progresul se salvează automat pe dispozitivul tău.</span></div>
-    </section>
-    <section aria-labelledby="library-heading">
-      <div class="section-heading"><h2 id="library-heading">Biblioteca de quizuri</h2><span>${QUIZZES.length} ${QUIZZES.length === 1 ? 'set disponibil' : 'seturi disponibile'}</span></div>
+    <section class="library" aria-label="Quizuri">
       <div class="quiz-grid">${QUIZZES.map((quiz) => {
         const { questions, done, percent } = quizStats(quiz);
         return `<button class="quiz-card" data-open-quiz="${escapeHtml(quiz.id)}" aria-label="Deschide quizul ${escapeHtml(quiz.title)}">
@@ -90,7 +81,6 @@ function renderHome() {
           <span class="card-cta"><span>${done ? 'Continuă de unde ai rămas' : 'Începe să înveți'}</span><span>→</span></span></span>
         </button>`;
       }).join('')}</div>
-      <p class="library-note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4.5 6v5.2c0 4.7 3.2 8.1 7.5 9.8 4.3-1.7 7.5-5.1 7.5-9.8V6L12 3Z"/><path d="m9 12 2 2 4-4"/></svg> Răspunsurile și poziția se salvează în acest browser. Folosește ↗ pentru a transfera progresul.</p>
     </section>`;
   app.querySelectorAll('[data-open-quiz]').forEach((button) => button.addEventListener('click', () => openQuiz(button.dataset.openQuiz)));
 }
@@ -270,3 +260,4 @@ async function start() {
 }
 
 start();
+
