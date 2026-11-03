@@ -39,6 +39,7 @@ body{background:var(--paper)}
 .button-outline{border-color:#3d3e46;color:#f1f1f3}.button-outline:hover:not(:disabled){background:#23242a;border-color:#676972}
 .button-quiet,.back-link{color:#a6a7ae}.back-link:hover{color:#fff}
 .question-image{background:#fff;border-color:#33343b}
+.question-image{width:100%;max-width:760px;max-height:none;object-fit:contain;border-radius:16px;cursor:zoom-in}
 .transfer-section textarea{background:#111216;border-color:#35363d;color:#f1f1f3}
 .transfer-dialog::backdrop{background:rgba(0,0,0,.72)}
 .library-note,.footer{color:#777981}
