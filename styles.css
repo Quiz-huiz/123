@@ -15,3 +15,44 @@
 .card-bottom{display:block}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 @media(max-width:720px){.card-title{font-size:25px;margin-top:18px}}
+
+/* Quiet, dark interface */
+:root{--paper:#101114;--card:#191a1f;--ink:#f5f5f7;--muted:#9a9ba3;--line:#2c2d33;--accent:#c8c9d0;--soft:#222329;--good:#83c99b;--bad:#f09a91;--shadow:0 18px 60px rgba(0,0,0,.28);color-scheme:dark}
+body{background:var(--paper)}
+.topbar,.footer{border-color:#25262b}
+.brand-mark{background:#f5f5f7}.brand-mark span{background:#141519}.brand-mark span:nth-child(3){background:#858791}
+.brand-period,.card-cta span:last-child{color:#d6d7dc}
+.icon-button,.card-arrow,.card-tag{background:#222329;border-color:#34353c;color:#d7d8de}
+.hero-aside,.section-heading,.quiz-card,.question-card,.result-card,.transfer-dialog{border-color:#2d2e35}
+.hero h1 em{color:#c9cad1}
+.quiz-card,.question-card,.result-card,.transfer-dialog{background:#191a1f}
+.quiz-card:hover{border-color:#4a4c54;box-shadow:var(--shadow)}
+.progress-track{background:#303138}.progress-fill{background:#aeb0b8}
+.option{background:#202126;border-color:#33343b;color:#ededf0;border-radius:15px}
+.option:hover:not(:disabled){background:#25262c;border-color:#555761}
+.option.selected,.option.selected .option-letter{background:#303138;border-color:#858791;color:#fff}
+.option-letter,.option-trailing{border-color:#55565e;color:#a9aab1}
+.option.correct{background:#1b2a21;border-color:#527d5f}.option.correct .option-letter{background:#26392c;border-color:#527d5f;color:#a5e1b4}
+.option.incorrect{background:#2d201f;border-color:#80534e}.option.incorrect .option-letter{border-color:#80534e;color:#f09a91}
+.answer-type,.type-mark{color:#c5c6cd;border-color:#858791}.type-mark.multiple:after{background:#c5c6cd}
+.button-dark{background:#f1f1f3;color:#17181c}.button-dark:hover:not(:disabled){background:#d9d9de}
+.button-outline{border-color:#3d3e46;color:#f1f1f3}.button-outline:hover:not(:disabled){background:#23242a;border-color:#676972}
+.button-quiet,.back-link{color:#a6a7ae}.back-link:hover{color:#fff}
+.question-image{background:#fff;border-color:#33343b}
+.transfer-section textarea{background:#111216;border-color:#35363d;color:#f1f1f3}
+.transfer-dialog::backdrop{background:rgba(0,0,0,.72)}
+.library-note,.footer{color:#777981}
+.toast{background:#f1f1f3;color:#17181c}
+.card-title,.question-text,.hero h1,.result-title,.quiz-name,.result-stat strong,.transfer-dialog h2,.hero-aside strong{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;letter-spacing:-.045em;font-weight:600}
+.hero h1{font-size:clamp(38px,4.5vw,54px)}
+.card-title{font-size:23px}
+.eyebrow:before{display:none}
+.eyebrow,.result-kicker{color:#a6a7ae;letter-spacing:1.2px}
+.quiz-card,.question-card,.result-card,.transfer-dialog{border-radius:24px}
+.option{border-radius:16px;min-height:58px}
+.button{border-radius:14px;min-height:46px}
+.icon-button{border-radius:14px}
+.card-tag{border-radius:999px}
+.transfer-dialog{background:#191a1f;color:var(--ink)}
+@media(max-width:720px){.hero{padding-top:42px}.hero h1{font-size:40px}.card-title{font-size:22px}}
+
