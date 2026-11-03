@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="ro">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f6f4ee" />
+    <meta name="description" content="Testează-te și recapitulează fiziologia în ritmul tău." />
+    <title>Studiu — biblioteca ta de quizuri</title>
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#home" aria-label="Studiu, pagina principală">
+        <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></span>
+        <span>studiu<span class="brand-period">.</span></span>
+      </a>
+      <div class="topbar-right">
+        <span class="topbar-note"><span class="status-dot"></span> Biblioteca ta de învățare</span>
+        <button class="icon-button" id="transfer-open" aria-label="Transferă progresul" title="Transferă progresul">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 7H5.8A2.8 2.8 0 0 0 3 9.8v8.4A2.8 2.8 0 0 0 5.8 21h8.4a2.8 2.8 0 0 0 2.8-2.8V16M16 3h5v5M21 3l-9 9" /></svg>
+        </button>
+      </div>
+    </header>
+
+    <main id="app" class="app-shell" aria-live="polite"></main>
+
+    <footer class="footer">
+      <span>Un pas mic, în fiecare zi.</span>
+      <span>Progresul tău rămâne pe dispozitivul tău.</span>
+    </footer>
+
+    <dialog id="transfer-dialog" class="transfer-dialog">
+      <form method="dialog"><button class="dialog-close" aria-label="Închide">×</button></form>
+      <div class="eyebrow">Progresul tău, oriunde</div>
+      <h2>Continuă pe alt dispozitiv</h2>
+      <p class="dialog-intro">Creează un cod pe dispozitivul acesta, apoi introdu-l pe celălalt. Codul conține răspunsurile și poziția ta de studiu.</p>
+      <section class="transfer-section">
+        <label for="progress-code">Codul tău de transfer</label>
+        <textarea id="progress-code" rows="3" readonly placeholder="Apasă butonul pentru a crea un cod"></textarea>
+        <button class="button button-dark button-wide" id="make-code">Creează codul</button>
+        <button class="button button-outline button-wide" id="copy-code" disabled>Copiază codul</button>
+      </section>
+      <section class="transfer-section transfer-import">
+        <label for="import-code">Ai deja un cod?</label>
+        <textarea id="import-code" rows="3" placeholder="Lipește codul primit de pe celălalt dispozitiv"></textarea>
+        <button class="button button-outline button-wide" id="apply-code">Încarcă progresul</button>
+        <p class="transfer-feedback" id="transfer-feedback" role="status"></p>
+      </section>
+      <p class="fine-print">Păstrează codul privat. El poate conține răspunsurile și rezultatele tale.</p>
+    </dialog>
+  </body>
+</html>
+
