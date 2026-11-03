@@ -17,6 +17,9 @@
         <span>Quiz</span>
       </a>
       <div class="topbar-right">
+        <button class="icon-button" id="reset-open" aria-label="Resetează progresul" title="Resetează progresul">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M5.5 7l1 13h11l1-13M9 7V4h6v3" /></svg>
+        </button>
         <button class="icon-button" id="transfer-open" aria-label="Transferă progresul" title="Transferă progresul">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 7H5.8A2.8 2.8 0 0 0 3 9.8v8.4A2.8 2.8 0 0 0 5.8 21h8.4a2.8 2.8 0 0 0 2.8-2.8V16M16 3h5v5M21 3l-9 9" /></svg>
         </button>
@@ -45,6 +48,16 @@
         <p class="transfer-feedback" id="transfer-feedback" role="status"></p>
       </section>
       <p class="fine-print">Păstrează codul privat. El poate conține răspunsurile și rezultatele tale.</p>
+    </dialog>
+    <dialog id="reset-dialog" class="transfer-dialog reset-dialog">
+      <form method="dialog"><button class="dialog-close" aria-label="Închide">×</button></form>
+      <div class="eyebrow">Resetare</div>
+      <h2>Ștergi tot progresul?</h2>
+      <p class="dialog-intro">Se vor șterge răspunsurile salvate și poziția ta din toate quizurile. Acțiunea nu poate fi anulată.</p>
+      <div class="reset-actions">
+        <button class="button button-outline" id="reset-cancel">Păstrează progresul</button>
+        <button class="button button-danger" id="reset-confirm">Șterge progresul</button>
+      </div>
     </dialog>
   </body>
 </html>
