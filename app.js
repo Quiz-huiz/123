@@ -12,6 +12,7 @@ const QUIZZES = [
 const STORAGE_KEY = 'studiu-progress-v1';
 const app = document.querySelector('#app');
 const dialog = document.querySelector('#transfer-dialog');
+const resetDialog = document.querySelector('#reset-dialog');
 const codeField = document.querySelector('#progress-code');
 const importField = document.querySelector('#import-code');
 const transferFeedback = document.querySelector('#transfer-feedback');
@@ -210,6 +211,15 @@ function decodeTransfer(code) {
 }
 
 document.querySelector('#transfer-open').addEventListener('click', openTransfer);
+document.querySelector('#reset-open').addEventListener('click', () => resetDialog.showModal());
+document.querySelector('#reset-cancel').addEventListener('click', () => resetDialog.close());
+document.querySelector('#reset-confirm').addEventListener('click', () => {
+  store.quizzes = {};
+  saveStore();
+  resetDialog.close();
+  renderHome();
+  showToast('Tot progresul a fost șters.');
+});
 document.querySelector('#make-code').addEventListener('click', () => {
   codeField.value = encodeTransfer();
   copyButton.disabled = false;
