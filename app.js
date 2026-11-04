@@ -95,7 +95,7 @@ function openQuiz(quizId, index) {
     app.querySelector('[data-home]').addEventListener('click', renderHome);
     return;
   }
-  if (typeof index === 'number') progress.current = Math.min(Math.max(index, 0), questions.length - 1);
+  if (typeof index === 'number') { progress.current = Math.min(Math.max(index, 0), questions.length - 1); saveStore(); }
   const currentIndex = progress.current;
   const question = questions[currentIndex];
   const selected = progress.answers[currentIndex] || [];
@@ -103,12 +103,14 @@ function openQuiz(quizId, index) {
   const correctIds = question.options.filter((option) => option.correct).map((option) => option.id);
   const multiple = correctIds.length > 1;
   const answered = isCorrect(question, selected);
-  const percent = Math.round(((currentIndex + (checked ? 1 : 0)) / questions.length) * 100);
+  const checkedCount = Object.values(progress.checked).filter(Boolean).length;
+  const percent = Math.round((checkedCount / questions.length) * 100);
 
   app.innerHTML = `
     <section class="player-shell">
       <div class="player-top"><button class="back-link" data-home><b>←</b> Biblioteca</button><span class="quiz-name">${escapeHtml(quiz.title)}</span><button class="icon-button player-transfer" aria-label="Transferă progresul" title="Transferă progresul">↗</button></div>
       <div class="player-progress"><span class="progress-track"><span class="progress-fill" style="width:${percent}%"></span></span><span class="progress-count">${currentIndex + 1} / ${questions.length}</span></div>
+      <details class="question-nav"><summary>Întrebări <span>${checkedCount} / ${questions.length}</span></summary><div class="question-nav-grid">${questions.map((item, questionIndex) => `<button class="question-nav-item ${questionIndex === currentIndex ? 'current' : ''} ${progress.checked[questionIndex] ? 'checked' : ''}" data-jump="${questionIndex}" aria-label="Întrebarea ${item.id}${progress.checked[questionIndex] ? ', verificată' : ''}" ${questionIndex === currentIndex ? 'aria-current="step"' : ''}>${item.id}</button>`).join('')}</div></details>
       <article class="question-card" data-multiple="${multiple}">
         <div class="question-topline"><span class="question-index">Întrebarea ${question.id}</span><span class="answer-type"><span class="type-mark ${multiple ? 'multiple' : ''}"></span>${multiple ? 'Mai multe răspunsuri' : 'Un singur răspuns'}</span></div>
         <h1 class="question-text">${escapeHtml(question.prompt)}</h1>
@@ -123,7 +125,7 @@ function openQuiz(quizId, index) {
         <p class="option-feedback ${checked ? (answered ? 'good' : 'bad') : ''}" aria-live="polite">${checked ? (answered ? 'Foarte bine. Ai ales toate răspunsurile corecte.' : `Răspuns corect: ${correctIds.join(', ')}.`) : (multiple ? 'Selectează toate variantele pe care le consideri corecte.' : 'Alege varianta pe care o consideri corectă.')}</p>
       </article>
       <div class="player-actions"><button class="button button-quiet" data-prev ${currentIndex === 0 ? 'disabled' : ''}>← Înapoi</button><div class="action-right">
-        ${checked ? `<button class="button button-outline" data-next>${currentIndex === questions.length - 1 ? 'Vezi rezultatul' : 'Întrebarea următoare'} →</button>` : `<button class="button button-dark" data-check ${selected.length ? '' : 'disabled'}>Verifică răspunsul</button>`}
+        <button class="button button-dark" data-check ${selected.length && !checked ? '' : 'disabled'}>${checked ? 'Verificat ✓' : 'Verifică răspunsul'}</button><button class="button button-outline" data-next>${currentIndex === questions.length - 1 ? 'Rezumat' : 'Următoarea'} →</button>
       </div></div>
       <p class="key-hint">${checked ? 'Răspunsul a fost verificat. Poți reveni oricând la întrebările anterioare.' : 'Poți reveni la întrebările anterioare fără să-ți pierzi selecțiile.'}</p>
     </section>`;
@@ -131,6 +133,7 @@ function openQuiz(quizId, index) {
   app.querySelector('[data-home]').addEventListener('click', renderHome);
   app.querySelector('.player-transfer').addEventListener('click', openTransfer);
   app.querySelectorAll('.question-image').forEach((image) => image.addEventListener('click', () => window.open(image.src, '_blank', 'noopener,noreferrer')));
+  app.querySelectorAll('[data-jump]').forEach((button) => button.addEventListener('click', () => openQuiz(quizId, Number(button.dataset.jump))));
   app.querySelectorAll('[data-option]').forEach((button) => button.addEventListener('click', () => {
     const id = button.dataset.option;
     let next = [...(progress.answers[currentIndex] || [])];
