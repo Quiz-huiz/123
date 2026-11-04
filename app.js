@@ -19,6 +19,7 @@ const transferFeedback = document.querySelector('#transfer-feedback');
 const copyButton = document.querySelector('#copy-code');
 let questionsByQuiz = {};
 let toastTimer;
+let quizToReset = null;
 
 function readStore() {
   try {
@@ -108,7 +109,7 @@ function openQuiz(quizId, index) {
 
   app.innerHTML = `
     <section class="player-shell">
-      <div class="player-top"><button class="back-link" data-home><b>←</b> Biblioteca</button><span class="quiz-name">${escapeHtml(quiz.title)}</span><button class="icon-button player-transfer" aria-label="Transferă progresul" title="Transferă progresul">↗</button></div>
+      <div class="player-top"><button class="back-link" data-home><b>←</b> Biblioteca</button><span class="quiz-name">${escapeHtml(quiz.title)}</span><div class="player-tools"><button class="icon-button player-reset" aria-label="Resetează acest quiz" title="Resetează acest quiz"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11a8 8 0 0 0-14.9-4M4 4v4h4M4 13a8 8 0 0 0 14.9 4M20 20v-4h-4" /></svg></button><button class="icon-button player-transfer" aria-label="Transferă progresul" title="Transferă progresul"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 7H5.8A2.8 2.8 0 0 0 3 9.8v8.4A2.8 2.8 0 0 0 5.8 21h8.4a2.8 2.8 0 0 0 2.8-2.8V16M16 3h5v5M21 3l-9 9" /></svg></button></div></div>
       <div class="player-progress"><span class="progress-track"><span class="progress-fill" style="width:${percent}%"></span></span><span class="progress-count">${currentIndex + 1} / ${questions.length}</span></div>
       <details class="question-nav"><summary>Întrebări <span>${checkedCount} / ${questions.length}</span></summary><div class="question-nav-grid">${questions.map((item, questionIndex) => `<button class="question-nav-item ${questionIndex === currentIndex ? 'current' : ''} ${progress.checked[questionIndex] ? 'checked' : ''}" data-jump="${questionIndex}" aria-label="Întrebarea ${item.id}${progress.checked[questionIndex] ? ', verificată' : ''}" ${questionIndex === currentIndex ? 'aria-current="step"' : ''}>${item.id}</button>`).join('')}</div></details>
       <article class="question-card" data-multiple="${multiple}">
@@ -132,6 +133,7 @@ function openQuiz(quizId, index) {
 
   app.querySelector('[data-home]').addEventListener('click', renderHome);
   app.querySelector('.player-transfer').addEventListener('click', openTransfer);
+  app.querySelector('.player-reset').addEventListener('click', () => { quizToReset = quizId; resetDialog.showModal(); });
   app.querySelectorAll('.question-image').forEach((image) => image.addEventListener('click', () => window.open(image.src, '_blank', 'noopener,noreferrer')));
   app.querySelectorAll('[data-jump]').forEach((button) => button.addEventListener('click', () => openQuiz(quizId, Number(button.dataset.jump))));
   app.querySelectorAll('[data-option]').forEach((button) => button.addEventListener('click', () => {
@@ -214,14 +216,17 @@ function decodeTransfer(code) {
 }
 
 document.querySelector('#transfer-open').addEventListener('click', openTransfer);
-document.querySelector('#reset-open').addEventListener('click', () => resetDialog.showModal());
+
 document.querySelector('#reset-cancel').addEventListener('click', () => resetDialog.close());
 document.querySelector('#reset-confirm').addEventListener('click', () => {
-  store.quizzes = {};
+  if (!quizToReset) return;
+  delete store.quizzes[quizToReset];
   saveStore();
+  const resetQuizId = quizToReset;
+  quizToReset = null;
   resetDialog.close();
-  renderHome();
-  showToast('Tot progresul a fost șters.');
+  openQuiz(resetQuizId, 0);
+  showToast('Progresul quizului a fost resetat.');
 });
 document.querySelector('#make-code').addEventListener('click', () => {
   codeField.value = encodeTransfer();
